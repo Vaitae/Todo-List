@@ -1,56 +1,45 @@
-var button=document.getElementById("add");
-var input=document.getElementById("user-input");
-var ul=document.querySelector("ul");
-var li=document.querySelector("li");
+var button = document.getElementById("add");
+var input = document.getElementById("user-input");
+var ul = document.querySelector("ul");
+var li = document.querySelector("li");
 
-button.addEventListener("click",function(){
-    if(input.value.length>0){
-        var li=document.createElement("li");
-        var del=document.createElement("button");
-        li.appendChild(document.createTextNode(input.value));
-        del.appendChild(document.createTextNode("Delete"));
-        del.classList.add("delete-btn");
-        li.append(del);
-        ul.appendChild(li);
-        
-        input.value="";
-    }else{
-        alert("Empty Task!");
-    }
+function inputLengthCheck() {
+  return input.value.length;
+}
 
-    li.addEventListener("click",function(){
-        li.classList.toggle("delete");
-    })
+function createListElement() {
+  var li = document.createElement("li");
+  var del = document.createElement("button");
+  li.appendChild(document.createTextNode(input.value));
+  del.appendChild(document.createTextNode("Delete"));
+  del.classList.add("delete-btn");
+  li.append(del);
+  ul.appendChild(li);
+  input.value = "";
 
-    del.addEventListener("click",function(){
-        li.parentNode.removeChild(li);
-    })
+  li.addEventListener("click", function () {
+    li.classList.toggle("done");
+  });
 
+  del.addEventListener("click", function () {
+    li.parentNode.removeChild(li);
+  });
+}
 
-})
+function addListAfterClick() {
+  if (inputLengthCheck() > 0) {
+    createListElement();
+  } else {
+    alert("Empty Task!");
+  }
+}
 
-input.addEventListener("keydown",function(e){
-    if(input.value.length>0 && e.key==="Enter"){
-        var li=document.createElement("li");
-        var del=document.createElement("button");
-        li.appendChild(document.createTextNode(input.value));
-        del.appendChild(document.createTextNode("Delete"));
-        del.classList.add("delete-btn");
-        ul.appendChild(li);
-        li.append(del);
-        input.value="";
-    }
+function addListAfterKeydown(e) {
+  if (inputLengthCheck() > 0 && e.key === "Enter") {
+    createListElement();
+  }
+}
 
-    li.addEventListener("click",function(){
-        li.classList.toggle("delete");
-    })
+button.addEventListener("click", addListAfterClick);
 
-    del.addEventListener("click",function(){
-        li.parentNode.removeChild(li);
-    })
-    
-
-})
-
-
-
+input.addEventListener("keydown", addListAfterKeydown);
