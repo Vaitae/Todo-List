@@ -1,7 +1,6 @@
 var button = document.getElementById("add");
 var input = document.getElementById("user-input");
 var ul = document.querySelector("ul");
-var li = document.querySelector("li");
 
 function inputLengthCheck() {
   return input.value.length;
